@@ -25,7 +25,7 @@ const callAmazonBedrockAPI = async (message) => {
 
 
 const ChatbotUI = () => {
-  const [messages, setMessages] = useState([{ text: 'Hello world', sender: 'bot' }]);
+  const [messages, setMessages] = useState([{ text: 'Hi there! I am a chat bot that can engage in a conversation with you!', sender: 'bot' }]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [titleOpacity, setTitleOpacity] = useState(1);
