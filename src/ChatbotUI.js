@@ -1,12 +1,28 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, Menu, X, HelpCircle } from 'lucide-react';
 import 'bootstrap/dist/css/bootstrap.css';
+import {invokeBedrockAgent} from "./invokeBedrockAgent";
 
 const callAmazonBedrockAPI = async (message) => {
   console.log('Calling Amazon Bedrock API with message:', message);
-  await new Promise(resolve => setTimeout(resolve, 3000));
-  return `This is a placeholder response from Amazon Bedrock for: "${message}"`;
+
+  try {
+    const apiCall = invokeBedrockAgent(message, "123");
+    const timeout = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('API call took too long')), 10000)
+    );
+
+    const result = await Promise.race([apiCall, timeout]);
+    console.log(result);
+
+    return result.completion;
+  } catch (error) {
+    console.error('Error calling Amazon Bedrock API:', error.message);
+    // throw error;
+  }
 };
+
+
 
 const ChatbotUI = () => {
   const [messages, setMessages] = useState([{ text: 'Hello world', sender: 'bot' }]);
@@ -67,8 +83,13 @@ const ChatbotUI = () => {
     }
   };
 
+
+
+
+
+
   return (
-      <div className={` flex flex-col h-screen bg-[#ffdee1] font-['Lora', 'Times New Roman', serif] transition-all duration-500 ${isSidebarOpen ? 'pr-32 no-scroll' : ''}`}>
+      <div className={` flex flex-col h-screen bg-[#ffdee1] font-['Lora', 'Times New Roman', serif] transition-all duration-500 no-scroll ${isSidebarOpen && window.innerWidth >= 768? 'pr-32' : ''}`}>
         <div
             className="absolute top-0 left-0 right-0 text-center p-4 text-2xl font-bold text-[#53212b] transition-opacity duration-300 z-10"
             style={{opacity: titleOpacity, fontFamily: 'Lora, sans-serif'}}
@@ -78,7 +99,7 @@ const ChatbotUI = () => {
 
 
         <div
-            className={`absolute top-4 right-4 z-20 flex flex-col transition-all duration-500 ${isSidebarOpen ? 'pr-32' : ''} z-20`}>
+            className={`absolute top-4 right-4 z-20 flex flex-col transition-all duration-500 ${isSidebarOpen && window.innerWidth >= 768? 'pr-32' : ''} z-20`}>
           <button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
               className="p-2 bg-[#fd4556] bg-opacity-50 rounded-md mb-2"
@@ -95,7 +116,7 @@ const ChatbotUI = () => {
 
         {/* Sidebar for desktop */}
         <div
-            className={`fixed inset-y-0 right-0 transform transition-transform duration-500 ease-in-out z-30 bg-[#bd3944] bg-opacity-90 p-4 ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'} hidden md:block`}>
+            className={`fixed inset-y-0 right-0 transform transition-transform duration-500 ease-in-out z-30 bg-[#bd3944] bg-opacity-90 p-4 ${isSidebarOpen && window.innerWidth >= 768 ? 'translate-x-0' : 'translate-x-full'} hidden md:block`}>
           <button onClick={() => setIsSidebarOpen(false)} className="absolute top-4 right-4">
             <X size={24} color="white"/>
           </button>
