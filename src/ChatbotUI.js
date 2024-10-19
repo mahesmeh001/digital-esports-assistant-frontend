@@ -9,16 +9,17 @@ const callAmazonBedrockAPI = async (message) => {
   try {
     const apiCall = invokeBedrockAgent(message, "123");
     const timeout = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error('API call took too long')), 10000)
+        setTimeout(() => reject(new Error('API call took too long')), 1200000)
     );
 
     const result = await Promise.race([apiCall, timeout]);
     console.log(result);
 
-    return result.completion;
+    return result.completion.replace(/\n/g, '<br />');
   } catch (error) {
     console.error('Error calling Amazon Bedrock API:', error.message);
     // throw error;
+
   }
 };
 
@@ -59,7 +60,7 @@ const ChatbotUI = () => {
       const interval = setInterval(() => {
         dots = dots.length < 3 ? dots + '.' : '';
         setLoadingText(`Loading${dots}`);
-      }, 500);
+      }, 600);
       return () => clearInterval(interval);
     }
   }, [isLoading]);
@@ -162,9 +163,7 @@ const ChatbotUI = () => {
               <div key={index} className={`mb-4 ${message.sender === 'user' ? 'text-right' : 'text-left'}`}>
                 <div className={`inline-block p-3 rounded-lg ${
                     message.sender === 'user' ? 'bg-white text-[#53212b] shadow' : 'bg-[#fd4556] bg-opacity-20 text-[#53212b]'
-                }`}>
-                  {message.text}
-                </div>
+                }`} dangerouslySetInnerHTML={{__html: message.text}}/>
               </div>
           ))}
           {isLoading && (
