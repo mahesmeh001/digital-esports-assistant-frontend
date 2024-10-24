@@ -227,13 +227,13 @@ const ChatbotUI = () => {
         {/* Styles */}
         <style jsx>{`
         .clip-path-message-user {
-          clip-path: polygon(0 0, 100% 0, 100% 85%, 95% 100%, 0 100%);
-          border-radius: 8px;
+          //clip-path: polygon(0 0, 100% 0, 100% 85%, 95% 100%, 0 100%);
+          //border-radius: 8px;
         }
         
         .clip-path-message-bot {
-          clip-path: polygon(0 0, 100% 0, 100% 100%, 5% 100%, 0 85%);
-          border-radius: 8px;
+          //clip-path: polygon(0 0, 100% 0, 100% 100%, 5% 100%, 0 85%);
+          //border-radius: 8px;
         }
         
         .safe-area-bottom {
