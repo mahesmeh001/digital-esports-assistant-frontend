@@ -26,8 +26,8 @@ export const invokeBedrockAgent = async (prompt, sessionId) => {
       },
     });
 
-    const agentId = "XDOIBEYFX3";
-    const agentAliasId = "5RZFVK8KHP";
+    const agentId = "ZZ88CT3BIC";
+    const agentAliasId = "ONVFAHX9UM";
 
     const command = new InvokeAgentCommand({
         agentId,
