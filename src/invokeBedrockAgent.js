@@ -27,7 +27,9 @@ export const invokeBedrockAgent = async (prompt, sessionId) => {
     });
 
     const agentId = "ZZ88CT3BIC";
-    const agentAliasId = "ONVFAHX9UM";
+    const agentAliasId = "TSTALIASID";
+    // ONVFAHX9UM <- static version
+    // TSTALIASID <- test alias id
 
     const command = new InvokeAgentCommand({
         agentId,

@@ -23,7 +23,7 @@ const callAmazonBedrockAPI = async (message) => {
 };
 
 const ChatbotUI = () => {
-  const [messages, setMessages] = useState([{ text: 'Hi there! I am a chat bot that can engage in a conversation with you!', sender: 'bot' }]);
+  const [messages, setMessages] = useState([{ text: 'Hey there! Ready to build a winning team and dominate the VCT? Ask me anything to get started, and let\'s craft your path to victory!', sender: 'bot' }]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [titleOpacity, setTitleOpacity] = useState(1);
@@ -35,7 +35,7 @@ const ChatbotUI = () => {
 
   // Clear conversation handler
   const handleClearConversation = () => {
-    setMessages([{ text: 'Hi there! I am a chat bot that can engage in a conversation with you!', sender: 'bot' }]);
+    setMessages([{ text: 'Hey there! Ready to build a winning team and dominate the VCT? Ask me anything to get started, and let\'s craft your path to victory!', sender: 'bot' }]);
   };
 
   const scrollToBottom = () => {
@@ -43,6 +43,10 @@ const ChatbotUI = () => {
   };
 
   useEffect(scrollToBottom, [messages]);
+
+  useEffect(() => {
+    document.title = 'AimBot';
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -61,7 +65,7 @@ const ChatbotUI = () => {
       let dots = '';
       const interval = setInterval(() => {
         dots = dots.length < 3 ? dots + '.' : '';
-        setLoadingText(`Loading${dots}`);
+        setLoadingText(`.${dots}`);
       }, 600);
       return () => clearInterval(interval);
     }
@@ -94,16 +98,24 @@ const ChatbotUI = () => {
   );
 
   return (
+
       <div className="flex flex-col h-[100dvh] bg-[#0F1923] font-['Lora', 'Times New Roman', serif] transition-all duration-500 text-[#ECE8E1]">
         <div
             className="absolute top-0 left-0 right-0 text-center p-4 text-2xl font-bold transition-opacity duration-300 z-10"
             style={{opacity: titleOpacity}}
         >
-          Valorant Chatbot
+          AimBot
+          <div
+              className="mt-2 text-lg font-medium text-gray-100 italic"
+          >
+            Your tactical edge in VCT team building
+          </div>
         </div>
 
+
         {/* Control buttons */}
-        <div className={`absolute top-4 right-4 z-20 flex flex-col gap-2 transition-all duration-500 ${isSidebarOpen && window.innerWidth >= 768 ? 'pr-32' : ''}`}>
+        <div
+            className={`absolute top-4 right-4 z-20 flex flex-col gap-2 transition-all duration-500 ${isSidebarOpen && window.innerWidth >= 768 ? 'pr-32' : ''}`}>
           <button
               onClick={handleClearConversation}
               className="p-2 bg-[#FF4655] bg-opacity-80 rounded-md hover:bg-opacity-100 transition-all"
@@ -171,7 +183,7 @@ const ChatbotUI = () => {
 
         {/* Chat container */}
         <div className="flex-1 overflow-y-auto p-4 pt-16" ref={chatContainerRef}>
-          <div className="mt-5" />
+          <div className="mt-20" />
           {messages.map((message, index) => (
               <div key={index} className={`mb-4 flex ${message.sender === 'user' ? 'justify-end' : 'justify-start items-center'}`}>
                 {message.sender === 'bot' && (
